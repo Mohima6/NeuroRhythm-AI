@@ -1,8 +1,5 @@
-"""
-NEURO-RHYTHM AI - MAIN DASHBOARD
-File: main.py
-Description: PyQt5 GUI dashboard connecting Vision, RL, and Audio modules
-"""
+
+
 
 import sys
 import os
@@ -15,10 +12,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import pyqtgraph as pg
 
-# Add current directory to path for module imports
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# Import our modules
+# Import modules
 try:
     from vision_engine.vision import NeuroVision
 
@@ -53,12 +50,11 @@ ACCENT_PURPLE = "#8b5cf6"
 ACCENT_RED = "#ef4444"
 
 
-# ============================================================================
-# 1. MAIN DASHBOARD WINDOW
-# ============================================================================
+
+# 1. DASHBOARD WINDOW
 
 class NeuroRhythmDashboard(QMainWindow):
-    """Main PyQt5 dashboard for Neuro-Rhythm AI"""
+    """PyQt5 dashboard for Neuro-Rhythm AI"""
 
     def __init__(self):
         super().__init__()
@@ -78,20 +74,20 @@ class NeuroRhythmDashboard(QMainWindow):
         self.is_audio_playing = False
         self.is_rl_learning = False
 
-        print("✅ Neuro-Rhythm AI Dashboard Initialized!")
+        print(" Neuro-Rhythm AI Dashboard Initialized!")
 
     def initialize_modules(self):
         """Initialize all AI modules"""
-        print("🧠 Initializing AI Modules...")
+        print(" Initializing AI Modules...")
 
         # Vision module
         self.vision_module = None
         if VISION_AVAILABLE:
             try:
                 self.vision_module = NeuroVision()
-                print("   ✅ Vision module loaded")
+                print("    Vision module loaded")
             except Exception as e:
-                print(f"   ❌ Vision module error: {e}")
+                print(f"    Vision module error: {e}")
 
         # RL module
         self.rl_agent = None
@@ -99,27 +95,27 @@ class NeuroRhythmDashboard(QMainWindow):
             try:
                 self.rl_agent = NeuroRLAgent()
                 if not self.rl_agent.load_model():
-                    print("   ⚠️ No pre-trained RL model found")
+                    print("   No pre-trained RL model found")
                 else:
-                    print("   ✅ RL agent loaded")
+                    print("    RL agent loaded")
             except Exception as e:
-                print(f"   ❌ RL module error: {e}")
+                print(f"    RL module error: {e}")
 
         # Audio module
         self.audio_therapist = None
         if AUDIO_AVAILABLE:
             try:
                 self.audio_therapist = AudioTherapist(auto_start=False)
-                print("   ✅ Audio therapist loaded")
+                print("    Audio therapist loaded")
             except Exception as e:
-                print(f"   ❌ Audio module error: {e}")
+                print(f"    Audio module error: {e}")
 
         # Audio mapper for manual mode
         self.audio_mapper = CognitiveAudioMapper() if AUDIO_AVAILABLE else None
 
     def setup_ui(self):
         """Setup the PyQt5 GUI"""
-        self.setWindowTitle("🧠 Neuro-Rhythm AI - Brainwave Therapy Dashboard")
+        self.setWindowTitle(" Neuro-Rhythm AI - Brainwave Therapy Dashboard")
         self.setGeometry(100, 50, 1600, 900)
 
         # Set window icon
@@ -134,7 +130,7 @@ class NeuroRhythmDashboard(QMainWindow):
         main_layout = QHBoxLayout()
         central_widget.setLayout(main_layout)
 
-        # ================= LEFT PANEL (Vision & Controls) =================
+        # LEFT PANEL (Vision & Controls)
         left_panel = QVBoxLayout()
         left_panel.setSpacing(10)
 
@@ -150,7 +146,6 @@ class NeuroRhythmDashboard(QMainWindow):
         controls_group = self.create_controls_group()
         left_panel.addWidget(controls_group)
 
-        # ================= CENTER PANEL (Brain States & Audio) =================
         center_panel = QVBoxLayout()
         center_panel.setSpacing(10)
 
@@ -166,7 +161,7 @@ class NeuroRhythmDashboard(QMainWindow):
         rl_group = self.create_rl_group()
         center_panel.addWidget(rl_group)
 
-        # ================= RIGHT PANEL (Logs & Charts) =================
+        #  RIGHT PANEL (Logs & Charts) 
         right_panel = QVBoxLayout()
         right_panel.setSpacing(10)
 
@@ -209,13 +204,13 @@ class NeuroRhythmDashboard(QMainWindow):
         self.chart_timer.timeout.connect(self.update_charts)
         self.chart_timer.setInterval(500)  # 500ms
 
-    # ============================================================================
+    
     # 2. UI COMPONENT CREATION
-    # ============================================================================
+    
 
     def create_webcam_group(self):
         """Create webcam feed display"""
-        group = QGroupBox("🎥 Webcam Feed")
+        group = QGroupBox("Webcam Feed")
         group.setStyleSheet(f"""
             QGroupBox {{
                 color: {ACCENT_BLUE};
@@ -279,7 +274,7 @@ class NeuroRhythmDashboard(QMainWindow):
         """)
         self.webcam_button.clicked.connect(self.toggle_webcam)
 
-        self.snapshot_button = QPushButton("📸 Take Snapshot")
+        self.snapshot_button = QPushButton(" Take Snapshot")
         self.snapshot_button.setStyleSheet(f"""
             QPushButton {{
                 background-color: {ACCENT_BLUE};
@@ -304,7 +299,7 @@ class NeuroRhythmDashboard(QMainWindow):
 
     def create_metrics_group(self):
         """Create vision metrics display"""
-        group = QGroupBox("📊 Cognitive Metrics")
+        group = QGroupBox("Cognitive Metrics")
         group.setStyleSheet(f"""
             QGroupBox {{
                 color: {ACCENT_GREEN};
@@ -329,7 +324,7 @@ class NeuroRhythmDashboard(QMainWindow):
             border-radius: 10px;
             background-color: {DARK_PANEL};
         """)
-        layout.addWidget(QLabel("🎯 Focus:"), 0, 0)
+        layout.addWidget(QLabel(" Focus:"), 0, 0)
         layout.addWidget(self.focus_label, 0, 1)
 
         # Stress metric
@@ -342,7 +337,7 @@ class NeuroRhythmDashboard(QMainWindow):
             border-radius: 10px;
             background-color: {DARK_PANEL};
         """)
-        layout.addWidget(QLabel("😰 Stress:"), 1, 0)
+        layout.addWidget(QLabel(" Stress:"), 1, 0)
         layout.addWidget(self.stress_label, 1, 1)
 
         # Drowsiness metric
@@ -355,7 +350,7 @@ class NeuroRhythmDashboard(QMainWindow):
             border-radius: 10px;
             background-color: {DARK_PANEL};
         """)
-        layout.addWidget(QLabel("😴 Drowsiness:"), 2, 0)
+        layout.addWidget(QLabel("Drowsiness:"), 2, 0)
         layout.addWidget(self.drowsiness_label, 2, 1)
 
         # Blink metric
@@ -381,7 +376,7 @@ class NeuroRhythmDashboard(QMainWindow):
             border-radius: 10px;
             background-color: {DARK_PANEL};
         """)
-        layout.addWidget(QLabel("💼 Task:"), 4, 0)
+        layout.addWidget(QLabel("Task:"), 4, 0)
         layout.addWidget(self.task_label, 4, 1)
 
         group.setLayout(layout)
@@ -405,7 +400,7 @@ class NeuroRhythmDashboard(QMainWindow):
         layout = QVBoxLayout()
 
         # Auto mode button
-        self.auto_button = QPushButton("🤖 Enable Auto Mode")
+        self.auto_button = QPushButton("Enable Auto Mode")
         self.auto_button.setCheckable(True)
         self.auto_button.setStyleSheet(f"""
             QPushButton {{
@@ -426,7 +421,7 @@ class NeuroRhythmDashboard(QMainWindow):
         self.auto_button.clicked.connect(self.toggle_auto_mode)
 
         # Reset button
-        reset_button = QPushButton("🔄 Reset Session")
+        reset_button = QPushButton("Reset Session")
         reset_button.setStyleSheet(f"""
             QPushButton {{
                 background-color: #64748b;
@@ -443,7 +438,7 @@ class NeuroRhythmDashboard(QMainWindow):
         reset_button.clicked.connect(self.reset_session)
 
         # Emergency stop
-        stop_button = QPushButton("🛑 Emergency Stop")
+        stop_button = QPushButton(" Emergency Stop")
         stop_button.setStyleSheet(f"""
             QPushButton {{
                 background-color: {ACCENT_RED};
@@ -469,7 +464,7 @@ class NeuroRhythmDashboard(QMainWindow):
 
     def create_brain_group(self):
         """Create brain state visualization and selection"""
-        group = QGroupBox("🧠 Brain State Control")
+        group = QGroupBox("Brain State Control")
         group.setStyleSheet(f"""
             QGroupBox {{
                 color: #f59e0b;
@@ -485,7 +480,7 @@ class NeuroRhythmDashboard(QMainWindow):
         layout = QVBoxLayout()
 
         # Current brain state display
-        self.brain_state_display = QLabel("Current State: 🟢 Neutral")
+        self.brain_state_display = QLabel("Current State: Neutral")
         self.brain_state_display.setStyleSheet(f"""
             font-size: 20px;
             font-weight: bold;
@@ -502,14 +497,14 @@ class NeuroRhythmDashboard(QMainWindow):
 
         # Brain state buttons with icons and frequencies
         brain_states = [
-            ("😴 Deep Sleep", "2.5 Hz Delta", "deep_sleep", "#8b5cf6"),
-            ("🧘 Meditation", "6.0 Hz Theta", "meditation", "#3b82f6"),
-            ("😌 Relaxed", "10.0 Hz Alpha", "relaxed", "#10b981"),
-            ("🎯 Focused", "16.0 Hz Beta", "focused", "#f59e0b"),
-            ("🚀 Peak Performance", "40.0 Hz Gamma", "peak_performance", "#ef4444"),
-            ("🎨 Creative", "7.83 Hz Theta", "creative_flow", "#ec4899"),
-            ("🌊 Stress Relief", "5.5 Hz Blend", "stress_relief", "#06b6d4"),
-            ("📚 Memory Boost", "10.5 Hz Alpha", "memory_boost", "#8b5cf6"),
+            (" Deep Sleep", "2.5 Hz Delta", "deep_sleep", "#8b5cf6"),
+            (" Meditation", "6.0 Hz Theta", "meditation", "#3b82f6"),
+            (" Relaxed", "10.0 Hz Alpha", "relaxed", "#10b981"),
+            ("Focused", "16.0 Hz Beta", "focused", "#f59e0b"),
+            ("Peak Performance", "40.0 Hz Gamma", "peak_performance", "#ef4444"),
+            ("Creative", "7.83 Hz Theta", "creative_flow", "#ec4899"),
+            ("Stress Relief", "5.5 Hz Blend", "stress_relief", "#06b6d4"),
+            ("Memory Boost", "10.5 Hz Alpha", "memory_boost", "#8b5cf6"),
         ]
 
         for i, (name, freq, preset, color) in enumerate(brain_states):
@@ -591,7 +586,7 @@ class NeuroRhythmDashboard(QMainWindow):
         # Audio control buttons
         audio_controls = QHBoxLayout()
 
-        self.play_button = QPushButton("▶️ Play")
+        self.play_button = QPushButton("Play")
         self.play_button.setStyleSheet(f"""
             QPushButton {{
                 background-color: {ACCENT_GREEN};
@@ -608,7 +603,7 @@ class NeuroRhythmDashboard(QMainWindow):
         """)
         self.play_button.clicked.connect(self.toggle_audio)
 
-        self.stop_button = QPushButton("⏹️ Stop")
+        self.stop_button = QPushButton(" Stop")
         self.stop_button.setStyleSheet(f"""
             QPushButton {{
                 background-color: {ACCENT_RED};
@@ -647,7 +642,7 @@ class NeuroRhythmDashboard(QMainWindow):
         # Audio test buttons
         test_layout = QHBoxLayout()
 
-        test_all_btn = QPushButton("🎧 Test All")
+        test_all_btn = QPushButton("Test All")
         test_all_btn.setStyleSheet(f"""
             QPushButton {{
                 background-color: {ACCENT_PURPLE};
@@ -663,7 +658,7 @@ class NeuroRhythmDashboard(QMainWindow):
         """)
         test_all_btn.clicked.connect(self.test_all_audio)
 
-        save_audio_btn = QPushButton("💾 Save Audio")
+        save_audio_btn = QPushButton(" Save Audio")
         save_audio_btn.setStyleSheet(f"""
             QPushButton {{
                 background-color: #64748b;
@@ -688,7 +683,7 @@ class NeuroRhythmDashboard(QMainWindow):
 
     def create_rl_group(self):
         """Create RL agent controls"""
-        group = QGroupBox("🤖 Reinforcement Learning")
+        group = QGroupBox("Reinforcement Learning")
         group.setStyleSheet(f"""
             QGroupBox {{
                 color: #ec4899;
@@ -741,7 +736,7 @@ class NeuroRhythmDashboard(QMainWindow):
         # RL controls
         rl_controls = QHBoxLayout()
 
-        self.train_rl_btn = QPushButton("🎓 Train RL")
+        self.train_rl_btn = QPushButton("Train RL")
         self.train_rl_btn.setStyleSheet(f"""
             QPushButton {{
                 background-color: #f59e0b;
@@ -757,7 +752,7 @@ class NeuroRhythmDashboard(QMainWindow):
         """)
         self.train_rl_btn.clicked.connect(self.train_rl_agent)
 
-        self.load_rl_btn = QPushButton("📂 Load Model")
+        self.load_rl_btn = QPushButton("Load Model")
         self.load_rl_btn.setStyleSheet(f"""
             QPushButton {{
                 background-color: {ACCENT_BLUE};
@@ -798,7 +793,7 @@ class NeuroRhythmDashboard(QMainWindow):
 
     def create_log_group(self):
         """Create training and session log"""
-        group = QGroupBox("📝 Session Log")
+        group = QGroupBox(" Session Log")
         group.setStyleSheet(f"""
             QGroupBox {{
                 color: #64748b;
@@ -831,7 +826,7 @@ class NeuroRhythmDashboard(QMainWindow):
 
         # Add welcome message
         self.log_message("=" * 50)
-        self.log_message("🧠 NEURO-RHYTHM AI SESSION STARTED")
+        self.log_message(" NEURO-RHYTHM AI SESSION STARTED")
         self.log_message("=" * 50)
         self.log_message(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         self.log_message("System initialized successfully")
@@ -841,7 +836,7 @@ class NeuroRhythmDashboard(QMainWindow):
         # Log controls
         log_controls = QHBoxLayout()
 
-        clear_log_btn = QPushButton("🗑️ Clear Log")
+        clear_log_btn = QPushButton("Clear Log")
         clear_log_btn.setStyleSheet(f"""
             QPushButton {{
                 background-color: #64748b;
@@ -857,7 +852,7 @@ class NeuroRhythmDashboard(QMainWindow):
         """)
         clear_log_btn.clicked.connect(self.clear_log)
 
-        save_log_btn = QPushButton("💾 Save Log")
+        save_log_btn = QPushButton("Save Log")
         save_log_btn.setStyleSheet(f"""
             QPushButton {{
                 background-color: {ACCENT_BLUE};
@@ -882,7 +877,7 @@ class NeuroRhythmDashboard(QMainWindow):
 
     def create_chart_group(self):
         """Create focus trend chart"""
-        group = QGroupBox("📈 Focus Trend")
+        group = QGroupBox("Focus Trend")
         group.setStyleSheet(f"""
             QGroupBox {{
                 color: {ACCENT_GREEN};
@@ -999,9 +994,9 @@ class NeuroRhythmDashboard(QMainWindow):
         group.setLayout(layout)
         return group
 
-    # ============================================================================
+    
     # 3. HELPER FUNCTIONS
-    # ============================================================================
+    
 
     def create_brain_icon(self):
         """Create a simple brain icon for the window"""
@@ -1041,14 +1036,14 @@ class NeuroRhythmDashboard(QMainWindow):
         self.log_text.append(f"[{timestamp}] {message}")
         self.log_text.ensureCursorVisible()
 
-    # ============================================================================
+    
     # 4. BUTTON HANDLERS
-    # ============================================================================
+    
 
     def toggle_webcam(self):
         """Toggle webcam feed"""
         if not VISION_AVAILABLE or not self.vision_module:
-            self.log_message("❌ Vision module not available")
+            self.log_message(" Vision module not available")
             return
 
         if not self.is_vision_active:
@@ -1057,22 +1052,22 @@ class NeuroRhythmDashboard(QMainWindow):
             self.metrics_timer.start()
             self.chart_timer.start()
             self.is_vision_active = True
-            self.webcam_button.setText("⏸️ Stop Webcam")
-            self.log_message("🎥 Webcam started")
+            self.webcam_button.setText(" Stop Webcam")
+            self.log_message("Webcam started")
         else:
             # Stop webcam
             self.vision_timer.stop()
             self.metrics_timer.stop()
             self.chart_timer.stop()
             self.is_vision_active = False
-            self.webcam_button.setText("▶️ Start Webcam")
+            self.webcam_button.setText(" Start Webcam")
             self.webcam_label.clear()
-            self.log_message("🎥 Webcam stopped")
+            self.log_message(" Webcam stopped")
 
     def take_snapshot(self):
         """Take snapshot of current frame"""
         if not self.is_vision_active:
-            self.log_message("❌ Webcam not active")
+            self.log_message(" Webcam not active")
             return
 
         # Save snapshot
@@ -1083,7 +1078,7 @@ class NeuroRhythmDashboard(QMainWindow):
         pixmap = self.webcam_label.pixmap()
         if pixmap:
             pixmap.save(filename)
-            self.log_message(f"📸 Snapshot saved: {filename}")
+            self.log_message(f" Snapshot saved: {filename}")
 
     def select_brain_state(self):
         """Handle brain state button click"""
@@ -1091,7 +1086,7 @@ class NeuroRhythmDashboard(QMainWindow):
         preset_name = sender.property("preset")
 
         if not AUDIO_AVAILABLE or not self.audio_therapist:
-            self.log_message("❌ Audio module not available")
+            self.log_message("Audio module not available")
             return
 
         # Update brain state display
@@ -1107,7 +1102,7 @@ class NeuroRhythmDashboard(QMainWindow):
             )
 
         # Log the selection
-        self.log_message(f"🧠 Brain state selected: {preset_name}")
+        self.log_message(f"Brain state selected: {preset_name}")
 
         # If auto mode is off, play the selected preset
         if not self.auto_button.isChecked():
@@ -1122,7 +1117,7 @@ class NeuroRhythmDashboard(QMainWindow):
     def toggle_audio(self):
         """Toggle audio playback"""
         if not AUDIO_AVAILABLE or not self.audio_therapist:
-            self.log_message("❌ Audio module not available")
+            self.log_message(" Audio module not available")
             return
 
         if not self.is_audio_playing:
@@ -1135,7 +1130,7 @@ class NeuroRhythmDashboard(QMainWindow):
     def play_selected_audio(self):
         """Play the selected brain state audio"""
         if not self.current_brain_state or self.current_brain_state == "unknown":
-            self.log_message("❌ No brain state selected")
+            self.log_message(" No brain state selected")
             return
 
         duration = self.duration_slider.value()
@@ -1143,20 +1138,20 @@ class NeuroRhythmDashboard(QMainWindow):
         try:
             self.audio_therapist.play_preset(self.current_brain_state, duration_seconds=duration)
             self.is_audio_playing = True
-            self.play_button.setText("⏸️ Pause")
+            self.play_button.setText(" Pause")
             self.audio_display.setText(f"Playing: {self.current_brain_state.replace('_', ' ').title()}")
-            self.log_message(f"🎵 Playing audio: {self.current_brain_state} ({duration}s)")
+            self.log_message(f"Playing audio: {self.current_brain_state} ({duration}s)")
         except Exception as e:
-            self.log_message(f"❌ Audio error: {e}")
+            self.log_message(f" Audio error: {e}")
 
     def stop_audio(self):
         """Stop audio playback"""
         if AUDIO_AVAILABLE and self.audio_therapist:
             self.audio_therapist.stop()
             self.is_audio_playing = False
-            self.play_button.setText("▶️ Play")
+            self.play_button.setText("Play")
             self.audio_display.setText("Audio: Stopped")
-            self.log_message("🎵 Audio stopped")
+            self.log_message(" Audio stopped")
 
     def adjust_volume(self, value):
         """Adjust audio volume"""
@@ -1168,10 +1163,10 @@ class NeuroRhythmDashboard(QMainWindow):
     def test_all_audio(self):
         """Test all audio presets"""
         if not AUDIO_AVAILABLE or not self.audio_therapist:
-            self.log_message("❌ Audio module not available")
+            self.log_message(" Audio module not available")
             return
 
-        self.log_message("🎧 Starting audio test sequence...")
+        self.log_message(" Starting audio test sequence...")
 
         # Run in separate thread to avoid blocking GUI
         def test_sequence():

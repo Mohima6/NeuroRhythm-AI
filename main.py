@@ -1,6 +1,4 @@
 
-
-
 import sys
 import os
 import time
@@ -12,9 +10,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import pyqtgraph as pg
 
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 # Import modules
 try:
     from vision_engine.vision import NeuroVision
@@ -48,8 +44,6 @@ ACCENT_BLUE = "#0ea5e9"
 ACCENT_GREEN = "#10b981"
 ACCENT_PURPLE = "#8b5cf6"
 ACCENT_RED = "#ef4444"
-
-
 
 # 1. DASHBOARD WINDOW
 
@@ -204,10 +198,7 @@ class NeuroRhythmDashboard(QMainWindow):
         self.chart_timer.timeout.connect(self.update_charts)
         self.chart_timer.setInterval(500)  # 500ms
 
-    
     # 2. UI COMPONENT CREATION
-    
-
     def create_webcam_group(self):
         """Create webcam feed display"""
         group = QGroupBox("Webcam Feed")

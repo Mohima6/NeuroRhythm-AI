@@ -1,3 +1,15 @@
+#blink tracker
+#face detector
+#gaze estimator
+#stress estimator
+#task classifier
+#emotion tracker
+#activity classifier
+#keyboard monitor
+#mouse monitor
+#brain audio environment
+
+
 
 
 import cv2
@@ -585,3 +597,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
